@@ -8,7 +8,7 @@ Assignement 4: add content to the following tests_Karina Palloson
 
 describe('Section 1: Functional tests', () => {
 
-    it('User can use only same both first and validation passwords', ()=>{
+    it('My test to check if user can use only same both first and validation passwords', ()=>{
         cy.get('#username').type('Something')
         cy.get('#email').type('kara@email.ee')
         cy.get('[data-cy="name"]').type('Mary')
@@ -23,7 +23,7 @@ describe('Section 1: Functional tests', () => {
         cy.get('#password_error_message').should ('not.be.visible')
         
     })
-        it('User can submit form with all fields added', ()=>{
+        it('My test to check if user can submit form with all fields added', ()=>{
         cy.get('#username').type('Something')
         cy.get('#email').type('kara@email.ee')
         cy.get('[data-cy="name"]').type('Mary')
@@ -57,8 +57,7 @@ describe('Section 1: Functional tests', () => {
 
         })
 
-    // Add at least 1 test for checking some mandatory field's absence
-    it.only('User can submit form with valid data and only mandatory fields added', ()=>{
+    it('My test to check that user cannot submit form without username', ()=>{
     inputValidData('MaryStrawberry')
     cy.get('#username').scrollIntoView()
     cy.get('#username').clear()
@@ -71,7 +70,7 @@ describe('Section 1: Functional tests', () => {
 
 })
 
-// functon inputonlyMandatorydata (username)
+
 /*
 Assignement 5: create more visual tests
 */
@@ -86,8 +85,15 @@ describe('Section 2: Visual tests', () => {
             .and('be.greaterThan', 100)   
     })
 
-    it('My test for second picture', () => {
-        // Create similar test for checking the second picture
+        
+describe('Section 2: Visual tests', () => {
+    it('My test for 2nd picture_Check the second picture and its parameters', () => {
+        cy.log('Will check logo source and size')
+        cy.get('img').next().should('have.attr', 'src').should('include', 'cypress_logo')
+        cy.get('img').next().invoke('height').should('be.lessThan', 116)
+            .and('be.greaterThan', 85)   
+    })
+
     });
 
     it('Check navigation part', () => {
@@ -111,7 +117,18 @@ describe('Section 2: Visual tests', () => {
 
     // Create similar test for checking the second link 
 
-    it.only('Check that radio button list is correct', () => {
+    it.only('My test for checking navigation part for the second link', () => {
+        cy.get('nav').children().should('have.length', 2)
+        cy.get('nav').siblings('h1').should('have.text', 'Registration form number 2')
+        cy.get('nav').children().eq(1).should('be.visible')
+            .and('have.attr', 'href', 'registration_form_3.html')
+            .click()
+        cy.url().should('contain', '/registration_form_3.html')
+        cy.go('back')
+        cy.log('Back again in registration form 2')
+    })
+
+    it('Check that radio button list is correct', () => {
         // Array of found elements with given selector has 4 elements in total
         cy.get('input[type="radio"]').should('have.length', 4)
 
@@ -133,7 +150,20 @@ describe('Section 2: Visual tests', () => {
         cy.get('input[type="radio"]').eq(0).should('not.be.checked')
     })
 
-    // Create test similar to previous one verifying check boxes
+    
+    it('My test checking that checkbox list is correct', () => {
+        cy.get('input[type="checkbox"]').should('have.length', 3)
+        cy.get('input[type="checkbox"]').next().eq(0).should('have.text','I have a bike')
+        cy.get('input[type="checkbox"]').next().eq(1).should('have.text','I have a car')
+        cy.get('input[type="checkbox"]').next().eq(2).should('have.text','I have a boat')
+        cy.get('input[type="checkbox"]').eq(0).check().should('be.checked')
+        cy.get('input[type="checkbox"]').eq(1).should('not.be.checked')
+        cy.get('input[type="checkbox"]').eq(2).should('not.be.checked')
+        cy.get('input[type="checkbox"]').eq(0).should('be.checked')
+        cy.get('input[type="checkbox"]').eq(1).check().should('be.checked')
+        cy.get('input[type="checkbox"]').eq(2).should('not.be.checked')
+       
+    })
 
     it('Car dropdown is correct', () => {
         // Here is just an example how to explicitely create screenshot from the code
@@ -156,7 +186,16 @@ describe('Section 2: Visual tests', () => {
         })
     })
 
-    // Create test similar to previous one
+
+    it.only('My test to check if dropdown of animals is correct', () => {
+        cy.get('#animal').children().should('have.length', 6)
+        cy.get('#animal').find('option').eq(0).should('have.text', 'Dog')
+        cy.get('#animal').find('option').eq(1).should('have.text', 'Cat')
+        cy.get('#animal').find('option').eq(2).should('have.text', 'Snake')
+        cy.get('#animal').find('option').eq(3).should('have.text', 'Hippo')
+        cy.get('#animal').find('option').eq(4).should('have.text', 'Cow')
+        cy.get('#animal').find('option').eq(5).should('have.text', 'Horse')
+     })
 
 })
 
